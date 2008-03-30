@@ -31,6 +31,10 @@ Example for parsing xml:
 
 
   xml = XmlNode.parse('<feed attr="1"><element>text</element><element>text</element></feed>')
-  xml['attr'] #=> '1'
+  xml['attr'] #=> '1'  
+  xml.find(:first, 'element')
+  xml.find(:all, 'element')
+  
   xml.children['element'].text #=> 'text'
-  xml.children.each { |e| e... }
+  xml.children.each { |e| e... }             
+  
