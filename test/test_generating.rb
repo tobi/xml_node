@@ -64,7 +64,7 @@ class TestXmlNode < Test::Unit::TestCase
   end
   
   def test_generate_nice_xml
-    assert_equal "<?xml version='1.0'?>\n<feed>\n  <element>test</element>\n  <element/>\n</feed>", XmlNode.new('feed') { |n| n << XmlNode.new('element', 'test'); n << XmlNode.new('element') }.to_xml
+    assert_equal "<?xml version='1.0'?>\n<feed>\n<element>\ntest\n</element>\n<element/>\n</feed>", XmlNode.new('feed') { |n| n << XmlNode.new('element', 'test'); n << XmlNode.new('element') }.to_xml
   end
   
   def test_add_array_of_nodes
@@ -78,6 +78,12 @@ class TestXmlNode < Test::Unit::TestCase
   
   def test_nil
     assert_equal '<nil/>', XmlNode.new('nil', nil).to_s
+  end          
+  
+  def test_fail_by_stating_error_when_cdata_is_nested
+    a = XmlNode.new('root')
+    a.cdata = ']]>'
+    assert_equal "<?xml version='1.0'?>\n<root>\nIllegal character &apos;]]&gt;&apos; in raw string &quot;]]&gt;&quot;\n</root>", a.to_xml
   end
   
     

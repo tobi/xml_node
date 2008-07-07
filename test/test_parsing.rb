@@ -35,9 +35,16 @@ class TestXmlNode < Test::Unit::TestCase
     assert_equal '1', xml.find(:first, '//elem').text
   end
 
+  def test_find_first
+    xml = XmlNode.parse('<feed><elem>1</elem><elem>2</elem><elem>3</elem></feed>')
+    assert_equal '1', xml.find(:first, '//elem').text
+  end
+
   def test_find_all
     xml = XmlNode.parse('<feed><elem>1</elem><elem>2</elem><elem>3</elem></feed>')
     assert_equal ['1', '2', '3'], xml.find(:all, '//elem').collect(&:text)
-  end
+  end           
+  
+  
 
 end

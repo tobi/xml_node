@@ -158,8 +158,10 @@ class XmlNode
       if c.is_a?(REXML::CData)
         return @element.replace_child(c,new_cdata)
       end
-    end
+    end    
     @element << new_cdata
+  rescue RuntimeError => e            
+    @element << REXML::Text.new(e.message)
   end
   
   def cdata
