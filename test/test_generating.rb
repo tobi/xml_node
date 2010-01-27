@@ -95,6 +95,16 @@ class TestXmlNode < Test::Unit::TestCase
     assert_equal '<feed/>', feed.to_s
   end
   
-    
+  def test_to_xml_pretty_printing
+    node = XmlNode.new('feed'){|feed| feed << XmlNode.new('text', 'Hello world') }
+
+    assert_equal "<?xml version='1.0'?>\n<feed>\n<text>\nHello world\n</text>\n</feed>", node.to_xml
+  end  
+
+  def test_to_xml_no_pretty_printing
+    node = XmlNode.new('feed'){|feed| feed << XmlNode.new('text', 'Hello world') }
+
+    assert_equal "<?xml version='1.0'?><feed><text>Hello world</text></feed>", node.to_xml(pretty_printing = false)
+  end  
   
 end

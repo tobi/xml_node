@@ -48,6 +48,15 @@ class REXML::Element
   end
 end
 
+module ActiveSupport
+  class TimeWithZone
+    def to_xml_value
+      self.xmlschema
+    end
+  end
+end
+
+
 class XmlNode
   attr_accessor :child_nodes
   attr_reader :element 
@@ -210,12 +219,12 @@ class XmlNode
   
   # Use to get pretty formatted xml including DECL
   # instructions
-  def to_xml
+  def to_xml(pretty_print = true)
     xml = []
     document = REXML::Document.new
     document << REXML::XMLDecl.new('1.0')
     document << @element
-    document.write( xml, 0)
+    document.write(xml, pretty_print ? 0 : -1)
     xml.join
   end
   
